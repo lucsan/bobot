@@ -1,0 +1,15 @@
+[
+  {
+    "id": "demo1",
+    "tagline": "the Info",
+    "body": "This is some information",
+    "lastDisplayed": "2020-08",
+    "link": "http link to the info source or related",
+    "tags": [
+      "demo",
+      "intro",
+      "trigger-words",
+      "search-tags"
+    ]
+  }
+]

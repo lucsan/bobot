@@ -1,0 +1,12 @@
+[
+  {
+    "id": "demo1",
+    "tagline": "the Hook",
+    "body": "This is the fact"
+  },
+  {
+    "id": "demo2",
+    "tagline": "Random facts triggered on /command",
+    "body": "Provides a random fact on demand /fact me"
+  }
+]
