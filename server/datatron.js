@@ -4,7 +4,8 @@ const loadFileData = () => {
 
 
   const roster = read('roster.dat.json')
-  console.log(roster.toString())
+  //console.log(roster.toString())
+  return roster
 }
 
 
