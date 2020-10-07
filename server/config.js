@@ -4,13 +4,15 @@ config.js - global config values for noddy.
 
 var env = process.env.NODE_ENV || 'development'
 
-// NOTE: exts in the exts array need a corresponding if statement in requester.js serveFile()
-var web = {
+var server = {
   port: 8800,
   remarks: true,
-  exts: ['php', 'htm', 'html', 'js', 'jpg', 'py'], // Order in this array is important.
-  portal: 'portal' // Name of portal folder, ie: html, www, html_public, public, etc
 }
+
+var testServer = {
+  port: 8808
+}
+
 var log = {
   on: true,
   to: 'cli', // Output messages to cli or file.
@@ -18,5 +20,6 @@ var log = {
   file: 'noddy.log' // log file name.
 }
 
-exports.web = web;
-exports.log = log;
+exports.server = server
+exports.testServer = testServer
+exports.log = log

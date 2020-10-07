@@ -1,6 +1,7 @@
 const qs = require('querystring')
 
-const responder = require('../../../server/responder')
+const responder = require('./slackResponder')
+const testResponder = require('../../../tests/slackTestResponder')
 const bobotEvents = require('../bobotSlackEvents')
 const bobotInteract = require('../bobotSlackInteract')
 const commandsRouter = require('./commandsRouter')
@@ -18,6 +19,7 @@ const interactions = (data, response) => {
 
   const qsString = qs.parse(data.toString())
   const payload = bobotInteract.perform(qsString.payload.replace('`', ''))
+  console.log('interactions (slackRouter) outgoing payload', payload);
   sendPayload(payload)
 }
 
@@ -45,15 +47,47 @@ const sendPayload = (payload) => {
 
   if (payload === undefined || payload.reply === undefined || !payload.reply) return
 
+  let postBody = ''
+
+  const channel = payload.channel_id
+  //if (!channel && payload.event.channel) channel = payload.event.channel
+  //if (!channel && payload.container.channel_id) channel = payload.container.channel_id
+  //const channel = payload.channel_id ? payload.channel_id : payload.event.channel
+
+  // block_actions payload.container.channel_id
+  
   if (payload.replyType === 'text') {
-    responder.postResponse(payload)
-    return
+    postBody = JSON.stringify({
+      token: payload.token,
+      channel,
+      text: payload.reply
+    })    
   }
 
   if (payload.replyType === 'blocks') {
-    responder.postResponse(payload)
-    return    
+    postBody = JSON.stringify({
+      token: payload.token,
+      trigger_id: payload.trigger_id,
+      channel,
+      blocks: payload.reply
+    })
   }
+
+  if (payload.replyType === 'view') {
+    postBody = JSON.stringify({
+      token: payload.token,
+      trigger_id: payload.trigger_id,
+      channel,
+      view: payload.reply
+    })
+  }
+
+  if (!payload.trigger_id || payload.trigger_id.indexOf('test.') === -1) {
+    responder.postResponse(postBody, payload)
+    return
+  }
+  testResponder.postResponse(postBody, payload)
+
 }
 
 exports.route = route

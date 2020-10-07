@@ -8,18 +8,16 @@
 const http = require("http")
 
 const router = require('./router')
-const datatron = require('./datatron')
 
 const start = () => {
-  http.createServer(onRequest).listen(config.web.port)
-  tools.log('note', 'server started on localhost:' + config.web.port)
+  http.createServer(onRequest).listen(config.server.port)
+  tools.log('note', 'server started on localhost:' + config.server.port)
   function onRequest(request, response) {
     request.on('error', function(err){
       tools.log('error', 'request', err)
     });
     router.route(request, response)
   }
-  datatron.loadFileData()
 }
 
 exports.start = start
