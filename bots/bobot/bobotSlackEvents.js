@@ -17,9 +17,10 @@ const perform = (payload) => {
 
 const appMention = (payload) => {
   console.log('bot mentioned')
-  payload.replyType = 'text'
   const text = payload.event.text.replace(`<@${payload.authed_users}> `, '')
-  console.log('text',text);
+  console.log('text', text);
+  
+  payload.replyType = 'text'  
   payload.reply = `do you want goating <@${payload.event.user}>?`
   return payload
   // @bobot add @barry to the roster for 2020-09-14
