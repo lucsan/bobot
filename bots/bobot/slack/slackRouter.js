@@ -49,10 +49,9 @@ const sendPayload = (payload) => {
 
   let postBody = ''
 
-  const channel = payload.channel_id
-  //if (!channel && payload.event.channel) channel = payload.event.channel
-  //if (!channel && payload.container.channel_id) channel = payload.container.channel_id
-  //const channel = payload.channel_id ? payload.channel_id : payload.event.channel
+  if (!payload.event) payload.event = {}
+
+  const channel = payload.channel_id || payload.event.channel || payload.container.channel_id
 
   // block_actions payload.container.channel_id
   
